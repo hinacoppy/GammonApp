@@ -1,0 +1,183 @@
+/**
+  bgboardapp.css
+  designed by hinacoppy 2019
+*/
+
+/* document outline ----------------------------------------- */
+*{
+  user-select:none; /* タップ、ドラッグで文字選択しないように */
+}
+html{
+  height:100%;
+  overflow:hidden;
+  overscroll-behavior:none; /* バウンススクロールを抑止(only for Android) */
+}
+body{
+  margin:0;
+  padding:0;
+  min-height:100%;
+  height:100%;
+  font-family:'Arial', 'Meiryo UI';
+}
+
+/* Game Display Layout settings ------------------------------------- */
+/* 以下すべて相対サイズにし、レスポンシブ対応可能にしておく */
+.container{
+  position:relative;
+}
+#board{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+}
+.point{
+  position:absolute;
+  width:5vw;
+  height:60vh;
+  border:3px solid #abf;
+  color:#29f;
+  border-radius:20px;
+}
+.pool{
+  position:absolute;
+  width:11vw;
+  height:30vh;
+  border:5px solid #abf;
+  border-radius:40px;
+}
+.goal{
+  position:absolute;
+  width:11vw;
+  height:50vh;
+  border:6px solid #5fa;
+  border-radius:40px;
+}
+.oparationbtn{
+  position:absolute;
+  display:inline-block;
+  background-color:#adf;
+  border:3px solid #29f;
+  color:#15f;
+  border-radius:20px;
+  padding:0 2vw;
+  font-size:2vw;
+  height:10vh;
+  line-height:10vh;
+  white-space:nowrap;
+}
+.oparationbtn:disabled {
+  color:#444;
+  background-color:#ccc;
+  border-color:#666;
+}
+.panel{
+  position:absolute;
+  z-index:50;
+  width:40vw;
+  height:50vh;
+  background-color:#dde;
+  border:3px solid #fb0;
+  border-radius:50px;
+  text-align: center;
+  font-size: 4vw;
+  color:#214;
+  padding-top:10vh;
+}
+.dicepool{
+  position:absolute;
+  border:3px solid #b0f;
+  width:14vw;
+  height:13vh;
+  border-radius:20px;
+}
+.settings{
+  position:absolute;
+  display:none;
+  z-index:99;
+}
+.relative{
+  position:relative;
+}
+/* Board Object settings ------------------------------------- */
+.dice{
+  position:absolute;
+  font-size:5vw;
+}
+.chequer{
+  display:block;
+  position:absolute;
+  width:5vw;
+  font-size:4vw;
+}
+.turn1{
+  transform:rotateZ(0deg);
+}
+.turn2{
+  transform:rotateZ(180deg);
+}
+.player1col{
+  color:#f55;
+}
+.player2col{
+  color:#55f;
+}
+.player1base{
+  background-color:#fee;
+}
+.player2base{
+  background-color:#eef;
+}
+.player1chequer{
+  color:#fcc;
+  transform:rotateY(180deg);
+}
+.player2chequer{
+  color:#ccf;
+  transform:rotateX(180deg);
+}
+
+/* Point Flashing ------------------------------------- */
+.flash{
+  box-shadow: 0 0 20px rgba(0, 0, 0, .6);
+}
+
+/* settingwindow decorations ------------------------------------- */
+.settings{
+  position:absolute;
+  display:none;
+  z-index:99;
+  background-color:#dff;
+  border:3px solid #00f;
+  padding:2vh 4vw;
+  font-size:1.8vw;
+}
+.popuptitle{
+  font-size:2.2vw;
+  color:#fff;
+  background-color:#46f;
+  padding:2vh 2vw;
+  margin-bottom:2vh;
+}
+
+/* radio switch icon ----------------------------------------- */
+input {
+  display:none;
+}
+.radiolabel{
+  display:inline-block;
+  width:5vw;
+  font-size:4vw;
+  vertical-align:middle;
+  opacity:0.5;
+}
+.player1icon{
+  color:#fcc;
+}
+.player2icon{
+  color:#ccf;
+}
+.switch:checked + label {
+  opacity:1;
+}

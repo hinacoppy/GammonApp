@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<meta name="description" content="Osampo Gammon App">
+<meta name="author" content="(C)hinacoppy 2019 - 2022">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/OsampoGammon.css">
+<link rel="stylesheet" href="/css/font-awesome-animation.min.css">
+<link rel="icon" href="icon/favicon.ico">
+<link rel="apple-touch-icon" href="icon/apple-touch-icon.png">
+<title>OsampoGammon</title>
+</head>
+
+<body class="container">
+<section id="board" class="boardarea">
+<div id="pt0"  class="pool player2base"></div>
+<div id="pt1"  class="point player1base"></div>
+<div id="pt2"  class="point player1base"></div>
+<div id="pt3"  class="point player1base"></div>
+<div id="pt4"  class="point"></div>
+<div id="pt5"  class="point"></div>
+<div id="pt6"  class="point"></div>
+<div id="pt7"  class="point"></div>
+<div id="pt8"  class="point"></div>
+<div id="pt9"  class="point"></div>
+<div id="pt10" class="point player2base"></div>
+<div id="pt11" class="point player2base"></div>
+<div id="pt12" class="point player2base"></div>
+<div id="pt13" class="pool player1base"></div>
+<div id="pt14" class="goal player1base"></div>
+<div id="pt15" class="goal player2base"></div>
+<div id="dicepool1" class="dicepool player1base"></div>
+<div id="dicepool2" class="dicepool player2base"></div>
+<div id="dice10" class="dice player1col"><i class="diceface fas"></i></div>
+<div id="dice11" class="dice player1col"><i class="diceface fas"></i></div>
+<div id="dice20" class="dice player2col"><i class="diceface fas"></i></div>
+<div id="dice21" class="dice player2col"><i class="diceface fas"></i></div>
+<div id="pw0" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw1" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw2" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw3" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw4" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw5" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw6" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pw7" class="chequer fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1chequer fas fa-dog" data-fa-transform="shrink-4"></i></div>
+<div id="pb0" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb1" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb2" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb3" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb4" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb5" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb6" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+<div id="pb7" class="chequer fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2chequer fas fa-cat" data-fa-transform="shrink-4"></i></div>
+</section>
+
+<div id="splash" class="panel">おさんぽギャモン<br><br>
+<button id="openingroll" class="oparationbtn relative"><i class="fas fa-dice"></i> ゲームを始める</button>
+</div>
+<div id="gameend" class="panel">あなたの勝ちです<br><br>
+<button id="nextgamebtn" class="oparationbtn relative"><i class="fas fa-check-circle"></i> もう一度遊ぶ</button>
+</div>
+<div id="youfirst" class="panel">あなたが先攻です</div>
+<div id="cannotmove" class="panel">動かせません</div>
+
+<button id="rollbtn" class="oparationbtn"><i class="fas fa-dice"></i> サイコロを振る</button>
+<button id="donebtn" class="oparationbtn"><i class="fas fa-check-circle"></i> 動かし終わり</button>
+<button id="undobtn" class="oparationbtn"><i class="fas fa-undo"></i> 元に戻す</button>
+
+<button id="settingbtn" class="oparationbtn"><i class="fas fa-bars"></i></button>
+
+<aside id="settings" class="settings">
+<h2>### Fairy Gammon App Settings (osampo) ###</h2>
+<p class="player1col">赤のコマ:
+<input type="radio" id="radio11" name="player1icon" class="switch" value="fa-dog" checked>
+<label for="radio11" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-dog" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio12" name="player1icon" class="switch" value="fa-cat">
+<label for="radio12" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-cat" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio13" name="player1icon" class="switch" value="fa-horse">
+<label for="radio13" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-horse" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio14" name="player1icon" class="switch" value="fa-dove">
+<label for="radio14" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-dove" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio15" name="player1icon" class="switch" value="fa-frog">
+<label for="radio15" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-frog" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio16" name="player1icon" class="switch" value="fa-fish">
+<label for="radio16" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-fish" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio17" name="player1icon" class="switch" value="fa-dragon">
+<label for="radio17" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-dragon" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio18" name="player1icon" class="switch" value="fa-crow">
+<label for="radio18" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-crow" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio19" name="player1icon" class="switch" value="fa-arrow-alt-circle-right">
+<label for="radio19" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player1col"></i>
+<i class="player1icon fas fa-arrow-alt-circle-right" data-fa-transform="shrink-4"></i></span></label>
+</p>
+<p class="player2col">青のコマ:
+<input type="radio" id="radio21" name="player2icon" class="switch" value="fa-dog">
+<label for="radio21" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-dog" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio22" name="player2icon" class="switch" value="fa-cat" checked>
+<label for="radio22" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-cat" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio23" name="player2icon" class="switch" value="fa-horse">
+<label for="radio23" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-horse" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio24" name="player2icon" class="switch" value="fa-dove">
+<label for="radio24" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-dove" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio25" name="player2icon" class="switch" value="fa-frog">
+<label for="radio25" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-frog" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio26" name="player2icon" class="switch" value="fa-fish">
+<label for="radio26" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-fish" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio27" name="player2icon" class="switch" value="fa-dragon">
+<label for="radio27" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-dragon" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio28" name="player2icon" class="switch" value="fa-crow">
+<label for="radio28" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-crow" data-fa-transform="shrink-4"></i></span></label>
+<input type="radio" id="radio29" name="player2icon" class="switch" value="fa-arrow-alt-circle-right">
+<label for="radio29" class="radiolabel">
+<span class="fa-layers fa-fw"><i class="fas fa-circle player2col"></i>
+<i class="player2icon fas fa-arrow-alt-circle-right" data-fa-transform="shrink-4"></i></span></label>
+</p>
+<p>&emsp;</p>
+<p>
+<button id="resignbtn" class="oparationbtn relative"><i class="fas fa-flag" style="color:white"></i> 降参</button>
+&emsp;&emsp;&emsp;
+<button id="newgamebtn" class="oparationbtn relative"><i class="fas fa-check-circle"></i> 新しいゲーム</button>
+&emsp;&emsp;&emsp;
+<button id="cancelbtn" class="oparationbtn relative"><i class="fas fa-times"></i> 閉じる</button>
+</p>
+</aside>
+
+
+<script src="/js/fontawesome-all.min.js" defer></script>
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/inobounce.min.js"></script>
+<script src="/js/BgChequer_class.js"></script>
+<script src="/js/BgXgid_class.js"></script>
+<script src="/js/BgUtil_class.js"></script>
+<script src="js/BgBoard_class.js"></script>
+<script src="js/BgGame_class.js"></script>
+<script>
+if (BgUtil.isIOS()) {
+  iNoBounce.enable();
+}
+var osampoGammon = new BgGame("half");
+</script>
+<script src="/js/start-serviceWorker.js"></script>
+</body>
+</html>
