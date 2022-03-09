@@ -11,10 +11,7 @@ class BgClock {
   pauseTimer(pausemode) {
   }
 
-  startTimer(pausemode) {
-  }
-
-  stopTimer() {
+  startTimer() {
   }
 
   setClockOption() {
