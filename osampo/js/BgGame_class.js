@@ -347,9 +347,19 @@ class BgGame {
 
   dragStopAction(event, ui) {
     this.flashOffMovablePoint();
-    this.dragEndPt = this.board.getDragEndPoint(ui.position, BgUtil.cvtTurnGm2Bd(this.player));
+    const dragendpt = this.board.getDragEndPoint(ui.position, BgUtil.cvtTurnGm2Bd(this.player));
+
     const xg = this.xgid;
-    const ok = xg.isMovable(this.dragStartPt, this.dragEndPt);
+    //ドロップされた位置が前後 1pt の範囲であれば OK とする。せっかちな操作に対応
+    const ok0 = xg.isMovable(this.dragStartPt, dragendpt);
+    const ok1 = xg.isMovable(this.dragStartPt, dragendpt + 1);
+    const ok2 = xg.isMovable(this.dragStartPt, dragendpt - 1);
+    const ok = ok0 || ok1 || ok2;
+
+    if      (ok0) { this.dragEndPt = dragendpt;     }
+    else if (ok1) { this.dragEndPt = dragendpt + 1; } //より進まない方を優先
+    else if (ok2) { this.dragEndPt = dragendpt - 1; } //ex.24の目で3にドロップしたときは2に進む
+
     const hit = xg.isHitted(this.dragEndPt);
 
     if (ok) {
