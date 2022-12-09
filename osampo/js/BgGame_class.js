@@ -354,11 +354,11 @@ class BgGame {
     const ok0 = xg.isMovable(this.dragStartPt, dragendpt);
     const ok1 = xg.isMovable(this.dragStartPt, dragendpt + 1);
     const ok2 = xg.isMovable(this.dragStartPt, dragendpt - 1);
-    const ok = ok0 || ok1 || ok2;
+    let ok = false;
 
-    if      (ok0) { this.dragEndPt = dragendpt;     }
-    else if (ok1) { this.dragEndPt = dragendpt + 1; } //より進まない方を優先
-    else if (ok2) { this.dragEndPt = dragendpt - 1; } //ex.24の目で3にドロップしたときは2に進む
+    if      (ok0)         { this.dragEndPt = dragendpt;     ok = true; }
+    else if (ok1 && !ok2) { this.dragEndPt = dragendpt + 1; ok = true; } //前後が移動可能な時は進めない
+    else if (ok2 && !ok1) { this.dragEndPt = dragendpt - 1; ok = true; } //ex.24の目で3にドロップしたときは進めない
 
     const hit = xg.isHitted(this.dragEndPt);
 

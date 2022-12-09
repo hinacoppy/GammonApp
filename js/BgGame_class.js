@@ -273,7 +273,7 @@ class BgGame {
   }
 
   diceAsDoneAction(e) {
-    if (BgUtil.cvtTurnGm2Bd(this.player) != e.currentTarget.id.substr(4,1)) { return; } //ex. id="dice10"
+    if (BgUtil.cvtTurnGm2Bd(this.player) != e.currentTarget.id.substring(4, 5)) { return; } //ex. id="dice10"
     this.doneAction();
   }
 
@@ -605,9 +605,19 @@ class BgGame {
 
   dragStopAction(event, ui) {
     this.flashOffMovablePoint();
-    this.dragEndPt = this.board.getDragEndPoint(ui.position, BgUtil.cvtTurnGm2Bd(this.player));
+    const dragendpt = this.board.getDragEndPoint(ui.position, BgUtil.cvtTurnGm2Bd(this.player));
+
     const xg = this.xgid;
-    const ok = xg.isMovable(this.dragStartPt, this.dragEndPt, this.flashflg);
+    //ドロップされた位置が前後 1pt の範囲であれば OK とする。せっかちな操作に対応
+    const ok0 = xg.isMovable(this.dragStartPt, dragendpt);
+    const ok1 = xg.isMovable(this.dragStartPt, dragendpt + 1);
+    const ok2 = xg.isMovable(this.dragStartPt, dragendpt - 1);
+    let ok = false;
+
+    if      (ok0)         { this.dragEndPt = dragendpt;     ok = true; }
+    else if (ok1 && !ok2) { this.dragEndPt = dragendpt + 1; ok = true; } //前後が移動可能な時は進めない
+    else if (ok2 && !ok1) { this.dragEndPt = dragendpt - 1; ok = true; } //ex.24の目で3にドロップしたときは進めない
+
     const hit = xg.isHitted(this.dragEndPt);
 
     if (ok) {
@@ -666,7 +676,7 @@ class BgGame {
 
   pointTouchStartAction(origevt) {
     const id = origevt.currentTarget.id;
-    const pt = parseInt(id.substr(2));
+    const pt = parseInt(id.substring(2));
     const chker = this.board.getChequerOnDragging(pt, BgUtil.cvtTurnGm2Bd(this.player));
     const evttypeflg = (origevt.type === "mousedown")
     const event = (evttypeflg) ? origevt : origevt.changedTouches[0];
