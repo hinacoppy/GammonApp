@@ -3,50 +3,55 @@
 
 class BgKifu {
   constructor(gameobj) {
-    this.kifuxgid = $("#kifuxgid");
-    this.downloadkifubtn = $("#downloadkifubtn");
-    this.downloadanchor = document.getElementById("downloadkifu");
-    this.kifumat = [];
-    this.matchlength = gameobj.matchLength;
-    this.score = [0, 0, 0];
-    this.playername = ["", "BottomSidePlayer", "TopSidePlayer"];
+    this.gameobj = gameobj;
     this.setEventHandler();
+    this.clearKifuXgid();
   }
 
   setEventHandler() {
+    this.downloadkifubtn = $("#downloadkifubtn");
     const clickEventType = 'click touchstart';
     this.downloadkifubtn.on(clickEventType, (e) => { e.preventDefault(); this.downloadKifuAction(); });
   }
 
   clearKifuXgid() {
-    this.kifuxgid.text('');
+    this.xgidarray = [];
   }
-
   addKifuXgid(xgid) {
-    this.kifuxgid.append(xgid + "\n");
+    this.xgidarray.push(xgid);
+  }
+  popKifuXgid() {
+    return this.xgidarray.pop();
+  }
+  peepKifuXgid() {
+    return this.xgidarray[this.xgidarray.length - 1];
   }
 
   downloadKifuAction() {
+    this.setGameOption();
     this.convertKifu();
     this.downloadKifu();
   }
 
   downloadKifu() {
     const kifu = this.kifumat.join('\n') + '\n'; //最後に改行を入れる
-    const blob = new Blob([ kifu, this.kifuxgid.text() ], { "type":"text/plain" });
-//    const blob = new Blob([ kifu ], { "type":"text/plain" });
-    this.downloadanchor.href = window.URL.createObjectURL(blob);
-    this.downloadanchor.click();
+    const xgidlist = this.xgidarray.join('\n') + '\n';
+//    const blob = new Blob([ kifu ], { "type":"text/plain" }); //production mode
+    const blob = new Blob([ kifu, xgidlist ], { "type":"text/plain" }); //debug mode
+    const downloadanchor = document.getElementById("downloadkifu");
+    const filename = "kifu_" + this.player1 + "_" + this.player2 + "_" + this.date8 + ".txt";
+    downloadanchor.href = window.URL.createObjectURL(blob);
+    downloadanchor.download = filename;
+    downloadanchor.click();
   }
 
   convertKifu() {
+    this.kifumat = [];
     this.makeHeader();
 
     let gamenum = 1;
     let xgiddata = [];
-    const kifuxgid = this.kifuxgid.text();
-    const xgidall = kifuxgid.split('\n');
-    for (const line of xgidall) {
+    for (const line of this.xgidarray) {
       if (line != '') { //空行がゲームの区切り
         xgiddata.push(line);
       } else {
@@ -62,7 +67,12 @@ class BgKifu {
     if (xgiddata.length == 0) { return; } //データがなければ何もしない
 
     const untrim = ((str, num) => { //str文字列の後ろにnum文字数になるまで空白を追加。trim()の逆処理
-      return (str + ' '.repeat(num)).substr(0, num);
+      return (str + ' '.repeat(num)).substring(0, num);
+    });
+
+    const replaceandtrim = ((str) => {
+      const str2 = str.replace("ILLEGAL?", "        ");
+      this.kifumat.push(str2.trimEnd());
     });
 
     const firstxg = new Xgid(xgiddata[0]); //XGIDの一つ目を見て、スコアを取得
@@ -71,19 +81,19 @@ class BgKifu {
     this.score = [0, score1, score2];
 
     //ゲームごとのヘッダを出力
-    this.kifumat.push(' Game ' + gamenum);
-    const p1 = untrim(' ' + this.playername[1] + ' : ' + score1, 38);
-    const p2 =  ' ' + this.playername[2] + ' : ' + score2;
-    this.kifumat.push(p1 + p2);
+    replaceandtrim(' Game ' + gamenum);
+    const p1 = untrim(' ' + this.player1 + ' : ' + score1, 38);
+    const p2 =  ' ' + this.player2 + ' : ' + score2;
+    replaceandtrim(p1 + p2);
 
     const actionlist = this.parse_xgidlist(xgiddata);
     for (let i = 0; i < actionlist.length; i += 2) {
-      let line = ('  ' + Math.trunc(i / 2 + 1) + ') ').substr(-5);
+      let line = ('  ' + Math.trunc(i / 2 + 1) + ') ').slice(-5);
       line += untrim(actionlist[i], 34);
       line += untrim((actionlist[i+1] || ''), 34); //データがないかもしれないので対策
-      this.kifumat.push(line);
+      replaceandtrim(line);
     }
-    this.kifumat.push('');
+    replaceandtrim('');
   }
 
   parse_xgidlist(xgidlist) {
@@ -369,29 +379,39 @@ class BgKifu {
   }
 
   makeHeader() {
-    this.kifumat.push('; [Site "Backgammon App"]');
+    this.kifumat.push('; [Site "' + this.site + '"]');
     this.kifumat.push('; [Match ID ""]');
-    this.kifumat.push('; [Player 1 "' + this.playername[1] + '"]');
-    this.kifumat.push('; [Player 2 "' + this.playername[2] + '"]');
+    this.kifumat.push('; [Player 1 "' + this.player1 + '"]');
+    this.kifumat.push('; [Player 2 "' + this.player2 + '"]');
     this.kifumat.push('; [Player 1 Elo "1600.00/0"]');
     this.kifumat.push('; [Player 2 Elo "1600.00/0"]');
-    this.kifumat.push('; [EventDate "' + this.getToday() + '"]');
-    this.kifumat.push('; [EventTime "00.00"]');
+    this.kifumat.push('; [EventDate "' + this.date + '"]');
+    this.kifumat.push('; [EventTime "00:00"]');
     this.kifumat.push('; [Variation "Backgammon"]');
     this.kifumat.push('; [Unrated "Off"]');
     this.kifumat.push('; [Crawford "On"]');
     this.kifumat.push('; [CubeLimit "1024"]');
     this.kifumat.push('');
-    this.kifumat.push(this.matchlength + ' point match');
+    this.kifumat.push(this.matchlen + ' point match');
     this.kifumat.push('');
+  }
+
+  setGameOption() {
+    this.site     = "Backgammon App";
+    this.date     = this.getToday();
+    this.player1  = "BottomSidePlayer";
+    this.player2  = "TopSidePlayer";
+    this.matchlen = this.gameobj.matchLength;
+    this.date8    = this.date.replace(/\//g, ""); //2023/05/17 -> 20230517
   }
 
   getToday() {
     const date = new Date();
     const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
     const datestr = year + "/" + month + "/" + day;
     return datestr;
   }
+
 }
