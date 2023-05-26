@@ -158,6 +158,7 @@ class BgGame {
     this.undoStack = [];
     const dice = BgUtil.randomdice(this.dicemx, openroll);
     this.xgid.dice = dice[2];
+    this.makeDiceList(dice[2]);
     this.xgid.usabledice = true;
     this.board.showBoard2(this.xgid);
     await this.board.animateDice(this.animDelay);
@@ -179,6 +180,7 @@ class BgGame {
     const xgidstr = this.popXgidPosition();
     this.xgid = new Xgid(xgidstr, this.gametype);
     this.xgid.usabledice = true;
+    this.makeDiceList(this.xgid.dice);
     this.donebtn.prop("disabled", (!this.xgid.moveFinished() && this.flashflg) );
     this.pushXgidPosition();
     this.board.showBoard2(this.xgid);
@@ -311,6 +313,14 @@ class BgGame {
     this.xgid.dice = "66";
     this.kifuobj.addKifuXgid(this.xgid.xgidstr);
     this.doneAction();
+  }
+
+  makeDiceList(dice) {
+    const dice1 = Number(dice.slice(0, 1));
+    const dice2 = Number(dice.slice(1, 2));
+    if      (dice1 == dice2) { this.dicelist = [dice1, dice1, dice1, dice1]; }
+    else if (dice1 <  dice2) { this.dicelist = [dice2, dice1]; } //大きい順
+    else                     { this.dicelist = [dice1, dice2]; }
   }
 
   showPipInfo() {
@@ -526,6 +536,7 @@ class BgGame {
 
     //ドラッグ開始時のコールバック関数
     const evfn_dragstart = ((origevt) => {
+      origevt.preventDefault();
       dragobj = origevt.currentTarget; //dragする要素を取得し、広域変数に格納
       if (!dragobj.classList.contains("draggable")) { return; } //draggableでないオブジェクトは無視
 
@@ -569,6 +580,7 @@ class BgGame {
 
     //ドラッグ終了時のコールバック関数
     const evfn_dragend = ((origevt) => {
+      origevt.preventDefault();
       dragobj.classList.remove("dragging"); //drag中フラグを削除
       dragobj.style.zIndex = zidx;
 
@@ -603,21 +615,56 @@ class BgGame {
     this.flashOnMovablePoint(this.dragStartPt);
   }
 
+  checkDragEndPt(xg, dragstartpt, dragendpt) {
+    let endpt = dragendpt;
+    let ok = false;
+
+    if (dragstartpt == dragendpt) {
+      //同じ位置にドロップ(＝クリック)したときは、ダイスの目を使ったマスに動かす
+      for (let i = 0; i < this.dicelist.length; i++) {
+        //ダイス目でピッタリに上がれればその目を使って上げる
+        const endptwk = this.dicelist.includes(dragstartpt) ? dragstartpt - this.dicelist[i]
+                                                            : Math.max(dragstartpt - this.dicelist[i], 0);
+        if (xg.isMovable(dragstartpt, endptwk)) {
+          this.dicelist.splice(i, 1);
+          endpt = endptwk;
+          ok = true;
+          break;
+        }
+      }
+    } else {
+      if (this.flashflg) {
+        //ドロップされた位置が前後 1pt の範囲であれば OK とする。せっかちな操作に対応
+        const ok0 = xg.isMovable(dragstartpt, dragendpt);
+        const ok1 = xg.isMovable(dragstartpt, dragendpt + 1);
+        const ok2 = xg.isMovable(dragstartpt, dragendpt - 1);
+        if      (ok0)         { endpt = dragendpt;     ok = true; } //ちょうどの目にドロップ
+        else if (ok1 && !ok2) { endpt = dragendpt + 1; ok = true; } //前後が移動可能な時は進めない
+        else if (ok2 && !ok1) { endpt = dragendpt - 1; ok = true; } //ex.24の目で3にドロップしたときは進めない
+      } else {
+        //イリーガルムーブを許可したとき
+        endpt = dragendpt;
+        ok = (dragstartpt > dragendpt) && !this.xgid.isBlocked(dragendpt); //掴んだマスより前でブロックポイントでなければtrue
+      }
+      //D&Dで動かした後クリックで動かせるようにダイスリストを調整しておく
+      //known bug:ダイス組み合わせの位置に動かしたときは、次のクリックムーブが正しく動かないことがある
+      for (let i = 0; i < this.dicelist.length; i++) {
+        if (this.dicelist[i] == (dragstartpt - endpt)) {
+          this.dicelist.splice(i, 1);
+          break;
+        }
+      }
+    }
+    return [endpt, ok];
+  }
+
   dragStopAction(event, ui) {
     this.flashOffMovablePoint();
     const dragendpt = this.board.getDragEndPoint(ui.position, BgUtil.cvtTurnGm2Bd(this.player));
 
     const xg = this.xgid;
-    //ドロップされた位置が前後 1pt の範囲であれば OK とする。せっかちな操作に対応
-    const ok0 = xg.isMovable(this.dragStartPt, dragendpt);
-    const ok1 = xg.isMovable(this.dragStartPt, dragendpt + 1);
-    const ok2 = xg.isMovable(this.dragStartPt, dragendpt - 1);
-    let ok = false;
-
-    if      (ok0)         { this.dragEndPt = dragendpt;     ok = true; }
-    else if (ok1 && !ok2) { this.dragEndPt = dragendpt + 1; ok = true; } //前後が移動可能な時は進めない
-    else if (ok2 && !ok1) { this.dragEndPt = dragendpt - 1; ok = true; } //ex.24の目で3にドロップしたときは進めない
-
+    let ok;
+    [this.dragEndPt, ok] = this.checkDragEndPt(xg, this.dragStartPt, dragendpt);
     const hit = xg.isHitted(this.dragEndPt);
 
     if (ok) {
