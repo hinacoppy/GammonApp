@@ -290,11 +290,11 @@ class BgGame {
       document.body.addEventListener("touchleave", evfn_dragend, false);
       document.body.addEventListener("touchend",   evfn_dragend, false);
 
-      const ui = {position: { //dragStartAction()に渡すオブジェクトを作る
+      const position = { //dragStartAction()に渡すオブジェクトを作る
                    left: dragobj.offsetLeft,
                    top:  dragobj.offsetTop
-                 }};
-      this.dragStartAction(origevt, ui);
+                 };
+      this.dragStartAction(origevt, position);
     });
 
     //ドラッグ中のコールバック関数
@@ -322,11 +322,11 @@ class BgGame {
       document.body.removeEventListener("touchleave", evfn_dragend, false);
       document.body.removeEventListener("touchend",   evfn_dragend, false);
 
-      const ui = {position: { //dragStopAction()に渡すオブジェクトを作る
+      const position = { //dragStopAction()に渡すオブジェクトを作る
                    left: dragobj.offsetLeft,
                    top:  dragobj.offsetTop
-                 }};
-      this.dragStopAction(origevt, ui);
+                 };
+      this.dragStopAction(origevt, position);
     });
 
     //dragできるオブジェクトにdragstartイベントを設定
@@ -336,18 +336,18 @@ class BgGame {
     }
   }
 
-  dragStartAction(event, ui) {
+  dragStartAction(event, position) {
     this.dragObject = $(event.currentTarget); //dragStopAction()で使うがここで取り出しておかなければならない
     const id = event.currentTarget.id;
     this.dragStartPt = this.board.getDragStartPoint(id, BgUtil.cvtTurnGm2Bd(this.player));
-    if (!this.outerDragFlag) { this.dragStartPos = ui.position; }
+    if (!this.outerDragFlag) { this.dragStartPos = position; }
     this.outerDragFlag = false;
     this.flashOnMovablePoint(this.dragStartPt);
   }
 
-  dragStopAction(event, ui) {
+  dragStopAction(event, position) {
     this.flashOffMovablePoint();
-    const dragendpt = this.board.getDragEndPoint(ui.position, BgUtil.cvtTurnGm2Bd(this.player));
+    const dragendpt = this.board.getDragEndPoint(position, BgUtil.cvtTurnGm2Bd(this.player));
 
     const xg = this.xgid;
     //ドロップされた位置が前後 1pt の範囲であれば OK とする。せっかちな操作に対応
@@ -430,8 +430,9 @@ class BgGame {
         this.outerDragFlag = true;
         this.dragStartPos = {left: chkerdom[0].style.left,
                              top:  chkerdom[0].style.top };
-        chkerdom.css({left: event.clientX - 30,
-                      top:  event.clientY - 30});
+        const offset = this.board.pieceHeight / 2; //チェッカーの真ん中をつかむ
+        chkerdom.css({left: event.clientX - offset,
+                      top:  event.clientY - offset});
         let delegateEvent;
         if (evttypeflg) {
           delegateEvent = new MouseEvent("mousedown", {clientX:event.clientX, clientY:event.clientY});
