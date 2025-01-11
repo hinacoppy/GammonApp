@@ -71,6 +71,7 @@ class BgGame {
     this.panelholder  = $("#panelholder");
     this.allpanel     = $(".panel");
     this.rolldouble   = $("#rolldouble");
+    this.takedrop     = $("#takedrop");
     this.doneundo     = $("#doneundo");
     this.gameend      = $("#gameend");
     this.hideAllPanel(); //font awesome が描画するのを待つ必要がある
@@ -393,11 +394,9 @@ class BgGame {
 
   showTakeDropPanel(player) {
     if (player) {
-      this.showElement(this.takebtn, 'R', player);
-      this.showElement(this.dropbtn, 'L', player);
+      this.showElement(this.takedrop, 'R', player);
     } else {
-      this.showElement(this.takebtn, 'L', player);
-      this.showElement(this.dropbtn, 'R', player);
+      this.showElement(this.takedrop, 'L', player);
     }
   }
 
@@ -415,17 +414,11 @@ class BgGame {
 
   showDoneUndoPanel(player, opening = false) {
     this.donebtn.prop("disabled", (!this.xgid.moveFinished() && this.flashflg) );
+    //常にダイスの下に表示(opening変数は使わなくなった)
     if (player) {
-      this.showElement(this.doneundo, 'L', player);
+      this.showElement(this.doneundo, 'R', player, 12);
     } else {
-      this.showElement(this.doneundo, 'R', player);
-    }
-    if (opening) { //オープニングロールのときは出目の大きい側に下にずらして表示
-      if (player) {
-        this.showElement(this.doneundo, 'R', player, 12);
-      } else {
-        this.showElement(this.doneundo, 'L', player, -12);
-      }
+      this.showElement(this.doneundo, 'L', player, -12);
     }
   }
 
