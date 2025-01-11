@@ -12,7 +12,7 @@ class BgGame {
     this.param3 = this.param0 * 4 + 3; //boff2
     this.dicemx = gameparam[2]; //dice pip max
 
-    this.player = false; //true=player1, false=player2
+    this.player = true; //true=player1, false=player2
     this.xgid = new Xgid(null, this.gametype);
     this.board = new BgBoard("bgBoardApp", this.gametype);
     this.undoStack = [];

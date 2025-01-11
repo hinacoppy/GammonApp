@@ -1,6 +1,6 @@
 /**
   bgboardapp.css
-  designed by hinacoppy 2019
+  designed by hinacoppy 2019 - 2025
 */
 
 /* document outline ----------------------------------------- */
@@ -8,17 +8,27 @@
   user-select:none; /* タップ、ドラッグで文字選択しないように */
 }
 html{
-  height:100%;
+  height:100vmin;
   overflow:hidden;
-  overscroll-behavior:none; /* バウンススクロールを抑止(only for Android) */
+  overscroll-behavior:none; /* バウンススクロールを抑止 */
 }
 body{
   margin:0;
   padding:0;
-  min-height:100%;
-  height:100%;
+  max-height:100vmin;
+  min-height:100vmin;
+  height:100vmin;
   font-family:'Arial', 'Meiryo UI';
 }
+
+@media screen and (orientation:portrait) {
+.container{ /* 縦画面の時は横向きに表示し、横画面にするよう促す */
+  width:100vh;
+  height:100vw;
+  margin:-100vw 0 100vh;
+  transform:rotate(90deg);
+  transform-origin:left bottom;
+}}
 
 /* Game Display Layout settings ------------------------------------- */
 /* 以下すべて相対サイズにし、レスポンシブ対応可能にしておく */
@@ -29,28 +39,28 @@ body{
   position:absolute;
   top:0;
   left:0;
-  width:100vw;
-  height:100vh;
+  width:100vmax;
+  height:100vmin;
 }
 .point{
   position:absolute;
-  width:5vw;
-  height:60vh;
+  width:5vmax;
+  height:60vmin;
   border:3px solid #abf;
   color:#29f;
   border-radius:20px;
 }
 .pool{
   position:absolute;
-  width:11vw;
-  height:30vh;
+  width:11vmax;
+  height:30vmin;
   border:5px solid #abf;
   border-radius:40px;
 }
 .goal{
   position:absolute;
-  width:11vw;
-  height:50vh;
+  width:11vmax;
+  height:50vmin;
   border:6px solid #5fa;
   border-radius:40px;
 }
@@ -61,10 +71,10 @@ body{
   border:3px solid #29f;
   color:#15f;
   border-radius:20px;
-  padding:0 2vw;
-  font-size:2vw;
-  height:10vh;
-  line-height:10vh;
+  padding:0 2vmax;
+  font-size:2vmax;
+  height:10vmin;
+  line-height:10vmin;
   white-space:nowrap;
 }
 .oparationbtn:disabled {
@@ -75,21 +85,21 @@ body{
 .panel{
   position:absolute;
   z-index:50;
-  width:40vw;
-  height:50vh;
+  width:40vmax;
+  height:50vmin;
   background-color:#dde;
   border:3px solid #fb0;
   border-radius:50px;
   text-align: center;
-  font-size: 4vw;
+  font-size: 4vmax;
   color:#214;
-  padding-top:10vh;
+  padding-top:10vmin;
 }
 .dicepool{
   position:absolute;
   border:3px solid #b0f;
-  width:14vw;
-  height:13vh;
+  width:14vmax;
+  height:13vmin;
   border-radius:20px;
 }
 .settings{
@@ -103,13 +113,13 @@ body{
 /* Board Object settings ------------------------------------- */
 .dice{
   position:absolute;
-  font-size:5vw;
+  font-size:5vmax;
 }
 .chequer{
   display:block;
   position:absolute;
-  width:5vw;
-  font-size:4vw;
+  width:5vmax;
+  font-size:4vmax;
 }
 .turn1{
   transform:rotateZ(0deg);
@@ -140,7 +150,7 @@ body{
 
 /* Point Flashing ------------------------------------- */
 .flash{
-  box-shadow: 0 0 20px rgba(0, 0, 0, .6);
+  box-shadow: 0 0 2vmax rgba(0, 0, 0, .6);
 }
 
 /* settingwindow decorations ------------------------------------- */
@@ -150,15 +160,15 @@ body{
   z-index:99;
   background-color:#dff;
   border:3px solid #00f;
-  padding:2vh 4vw;
-  font-size:1.8vw;
+  padding:2vmin 4vmax;
+  font-size:1.8vmax;
 }
 .popuptitle{
-  font-size:2.2vw;
+  font-size:2.2vmax;
   color:#fff;
   background-color:#46f;
-  padding:2vh 2vw;
-  margin-bottom:2vh;
+  padding:2vmin 2vmax;
+  margin-bottom:2vmin;
 }
 
 /* radio switch icon ----------------------------------------- */
@@ -167,8 +177,8 @@ input {
 }
 .radiolabel{
   display:inline-block;
-  width:5vw;
-  font-size:4vw;
+  width:5vmax;
+  font-size:4vmax;
   vertical-align:middle;
   opacity:0.5;
 }
