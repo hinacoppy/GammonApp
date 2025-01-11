@@ -1,134 +1,135 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<meta name="description" content="BackGammon">
-<meta name="author" content="(C)hinacoppy 2019 - 2022">
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="../css/bgboardapp.css">
-<link rel="stylesheet" href="/css/bgAppBoard.css">
-<link rel="stylesheet" href="/css/font-awesome-animation.min.css">
-<link rel="icon" href="icon/favicon.ico">
-<link rel="apple-touch-icon" href="icon/apple-touch-icon.png">
-<title>BackGammon</title>
+  <meta charset="UTF-8" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="description" content="BackGammon" />
+  <meta name="author" content="(C)hinacoppy 2019 - 2025" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="../css/bgboardapp.css" />
+  <link rel="stylesheet" href="/css/bgAppBoard.css" />
+  <link rel="stylesheet" href="/css/font-awesome-animation.min.css" />
+  <link rel="icon" href="icon/favicon.ico" />
+  <link rel="apple-touch-icon" href="icon/apple-touch-icon.png" />
+  <title>BackGammon</title>
 </head>
-<body class="container normalgammon">
-<section id="board" class="board"></section>
+<body>
+ <article class="container normalgammon">
+  <section id="board" class="board"></section>
 
-<div id="player1" class="nav">
-<div id="score1" class="score">0</div>
-<div id="pip1" class="pip">0</div>
-<div id="clock1" class="clock">10:00</div>
-<div id="delay1" class="delay">12</div>
-</div>
-<div id="player2" class="nav">
-<div id="score2" class="score">0</div>
-<div id="pip2" class="pip">0</div>
-<div id="clock2" class="clock">10:00</div>
-<div id="delay2" class="delay">12</div>
-</div>
-<nav id="nav" class="nav">
-<div id="matchinfo" class="score">$</div>
-<button id="settingbtn" class="oparationbtn"><i class="fas fa-bars"></i> Settings</button>
-<button id="pausebtn" class="oparationbtn"><i class="fas fa-pause"></i> Pause</button>
-</nav>
+  <nav id="player1" class="nav">
+   <div id="score1" class="score">0</div>
+   <div id="pip1" class="pip">0</div>
+   <div id="clock1" class="clock">10:00</div>
+   <div id="delay1" class="delay">12</div>
+  </nav>
+  <nav id="player2" class="nav">
+   <div id="score2" class="score">0</div>
+   <div id="pip2" class="pip">0</div>
+   <div id="clock2" class="clock">10:00</div>
+   <div id="delay2" class="delay">12</div>
+  </nav>
+  <nav id="nav" class="nav">
+   <div id="matchinfo" class="score">$</div>
+   <button id="settingbtn" class="oparationbtn"><i class="fas fa-bars"></i> Settings</button>
+   <button id="pausebtn" class="oparationbtn"><i class="fas fa-pause"></i> Pause</button>
+  </nav>
 
-<section id="panelholder" style="display:none">
-<div id="rolldouble" class="panel">
-<button id="doublebtn" class="oparationbtn"><i class="fas fa-dice-d6"></i> Double</button> &emsp;&emsp;&emsp;
-<button id="rollbtn" class="oparationbtn"><i class="fas fa-dice"></i> Roll</button>
-<button id="passbtn" class="oparationbtn"><i class="fas fa-ban"></i> Pass</button>
-</div>
-<button id="takebtn" class="oparationbtn panel"><i class="fas fa-thumbs-up"></i> Take</button>
-<button id="dropbtn" class="oparationbtn panel"><i class="fas fa-thumbs-down"></i> Pass</button>
+  <section id="panelholder" style="display: none;">
+   <div id="rolldouble" class="panel">
+    <button id="doublebtn" class="oparationbtn"><i class="fas fa-dice-d6"></i> Double</button> &emsp;&emsp;&emsp;
+    <button id="rollbtn" class="oparationbtn"><i class="fas fa-dice"></i> Roll</button>
+    <button id="passbtn" class="oparationbtn"><i class="fas fa-ban"></i> Pass</button>
+   </div>
+   <button id="takebtn" class="oparationbtn panel"><i class="fas fa-thumbs-up"></i> Take</button>
+   <button id="dropbtn" class="oparationbtn panel"><i class="fas fa-thumbs-down"></i> Pass</button>
 
-<div id="doneundo" class="panel">
-<button id="donebtn" class="oparationbtn"><i class="fas fa-check-circle"></i> Done</button> &emsp;&emsp;&emsp;
-<button id="undobtn" class="oparationbtn"><i class="fas fa-undo"></i> Undo</button>
-</div>
-<button id="openingroll" class="oparationbtn panel"><i class="fas fa-dice"></i> Opening Roll</button>
+   <div id="doneundo" class="panel">
+    <button id="undobtn" class="oparationbtn"><i class="fas fa-undo"></i> Undo</button> &emsp;&emsp;&emsp;
+    <button id="donebtn" class="oparationbtn"><i class="fas fa-check-circle"></i> Done</button>
+   </div>
+   <button id="openingroll" class="oparationbtn panel"><i class="fas fa-dice"></i> Opening Roll</button>
 
-<div id="gameend" class="panel settings">
-<p class="mes1">You WIN and the MATCH</p>
-<p class="mes2">Get <span>2</span>pt</p>
-<p class="mes3"><span>7</span> - <span>5</span> &emsp; (<span>9</span>pt)</p>
-<button id="gameendnextbtn" class="oparationbtn"><i class="fas fa-arrow-alt-circle-right"></i> Next</button>
-<button id="gameendokbtn" class="oparationbtn"><i class="fas fa-check-circle"></i> OK</button>
-</div>
-</section>
+   <div id="gameend" class="panel settings">
+    <p class="mes1">You WIN and the MATCH</p>
+    <p class="mes2">Get 4pt (GAMMON)</p>
+    <p class="mes3">7 - 5 (9pt)</p>
+    <button id="gameendnextbtn" class="oparationbtn"><i class="fas fa-arrow-alt-circle-right"></i> Next</button>
+    <button id="gameendokbtn" class="oparationbtn"><i class="fas fa-check-circle"></i> OK</button>
+   </div>
+  </section>
 
-<aside id="pausepanel" class="settings" style="display:none">
-<br><br><br>
-<i class="fas fa-pause-circle fa-8x"></i>
-<br><br><br>
-<button id="restartbtn" class="oparationbtn"><i class="fas fa-play"></i> Re-Start Clock</button>
-</aside>
+  <aside id="pausepanel" class="settings" style="display: none;">
+   <br><br><br>
+   <i class="fas fa-pause-circle fa-8x"></i>
+   <br><br><br>
+   <button id="restartbtn" class="oparationbtn"><i class="fas fa-play"></i> Re-Start Clock</button>
+  </aside>
 
-<aside id="settings" class="settings" style="display:none">
-<h2>### Gammon Board App Settings ###</h2>
-<p>
-Match length:
-<select id="matchlen" name="matchlen">
-<option value="0" selected>$</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="5">5</option>
-<option value="7">7</option>
-<option value="11">11</option>
-<option value="17">17</option>
-<option value="25">25</option>
-</select>
-($ = Unlimited)
-</p>
-<p>
-Clock time: Pt &nbsp; x &nbsp;
-<select id="selminpoint" name="selminpoint">
-<option value="1">1</option>
-<option value="2" selected>2</option>
-<option value="2.5">2.5</option>
-</select>
-min. &emsp;&emsp;&emsp;&emsp;
-
-Delay: &nbsp;
-<select id="seldelay" name="seldelay">
-<option value="8">8</option>
-<option value="12" selected>12</option>
-<option value="20">20</option>
-</select>
-sec.
-</p>
-<p>
-<input type="checkbox" id="showpip" name="showpip" class="switch" checked>
-<label for="showpip" class="togglelabel">Show pip</label>
-&emsp;&emsp;
-<input type="checkbox" id="jacoby" name="jacoby" class="switch" value="jacoby" checked>
-<label for="jacoby" class="togglelabel">Jacoby Rule <span style="font-size:smaller;">(unlimited only)</span></label>
-</p>
-<p>
-<input type="checkbox" id="flashdest" name="flashdest" class="switch" checked>
-<label for="flashdest" class="togglelabel">Flash movable Pt</label>
-&emsp;&emsp;
-<input type="checkbox" id="useclock" name="useclock" class="switch" value="useclock">
-<label for="useclock" class="togglelabel">Use Clock</label>
-</p>
-<p>
-<button id="resignbtn" class="oparationbtn"><i class="fas fa-flag" style="color:white"></i> Resign</button>&emsp;
-<button id="newgamebtn" class="oparationbtn"><i class="fas fa-check"></i> New Game</button>&emsp;
-<button id="cancelbtn" class="oparationbtn"><i class="fas fa-times"></i> Cancel</button>&emsp;
-<a id="downloadkifu" href="" download="kifu.txt"><button id="downloadkifubtn" class="oparationbtn"><i class="fas fa-download"></i> Kifu</button></a>&emsp;
-<a href="help.html" target="help"><button id="helpbtn" class="oparationbtn"><i class="fas fa-question"></i> Help</button></a>
-</p>
-<div id="kifuxgid" style="display:none;"></div>
-</aside>
-
+  <aside id="settings" class="settings" style="display: none;">
+   <h2>### Gammon Board App Settings ###</h2>
+   <p>
+    Match length:
+    <select id="matchlen" name="matchlen">
+     <option value="0" selected>$</option>
+     <option value="1">1</option>
+     <option value="2">2</option>
+     <option value="3">3</option>
+     <option value="5">5</option>
+     <option value="7">7</option>
+    </select>
+    ($ = Unlimited)
+   </p>
+   <p>
+    Clock time: Pt &nbsp; x &nbsp;
+    <select id="selminpoint" name="selminpoint">
+     <option value="1">1</option>
+     <option value="2" selected>2</option>
+     <option value="2.5">2.5</option>
+    </select>
+    min. &emsp;&emsp;&emsp;&emsp; 
+    Delay: &nbsp;
+    <select id="seldelay" name="seldelay">
+     <option value="8">8</option>
+     <option value="12" selected>12</option>
+     <option value="20">20</option>
+    </select>
+    sec.
+   </p>
+   <p>
+    <input type="checkbox" id="showpip" name="showpip" class="switch" checked />
+    <label for="showpip" class="togglelabel">Show pip</label>
+    &emsp;&emsp;
+    <input type="checkbox" id="jacoby" name="jacoby" class="switch" value="jacoby" checked />
+    <label for="jacoby" class="togglelabel">Jacoby Rule <span style="font-size: smaller;">(unlimited only)</span></label>
+   </p>
+   <p>
+    <input type="checkbox" id="flashdest" name="flashdest" class="switch" checked />
+    <label for="flashdest" class="togglelabel">Flash movable Pt</label>
+    &emsp;&emsp;
+    <input type="checkbox" id="useclock" name="useclock" class="switch" value="useclock" />
+    <label for="useclock" class="togglelabel">Use Clock</label>
+   </p>
+   <p>
+    <button id="resignbtn" class="oparationbtn"><i class="fas fa-flag" style="color: white;"></i> Resign</button>&emsp;
+    <button id="newgamebtn" class="oparationbtn"><i class="fas fa-check"></i> New Game</button>&emsp;
+    <button id="cancelbtn" class="oparationbtn"><i class="fas fa-times"></i> Cancel</button>&emsp;
+    <a id="downloadkifu" href="" download="kifu.txt">
+     <button id="downloadkifubtn" class="oparationbtn"><i class="fas fa-download"></i> Kifu</button>
+    </a>
+    &emsp;
+    <a href="help.html" target="help">
+     <button id="helpbtn" class="oparationbtn"><i class="fas fa-question"></i> Help</button>
+    </a>
+   </p>
+   <div id="kifuxgid" style="display: none;"></div>
+  </aside>
+ </article>
 
 <script src="/js/fontawesome-inuse.min.js" defer></script>
 <script src="/js/jquery-3.7.1.min.js"></script>
-<script src="/js/inobounce.min.js"></script>
 <script src="/js/BgUtil_class.js"></script>
 <script src="/js/BgXgid_class.js"></script>
 <script src="/js/BgChequer_class.js"></script>
@@ -137,10 +138,7 @@ sec.
 <script src="../js/BgKifu_class.js"></script>
 <script src="../js/BgGame_class.js"></script>
 <script>
-if (BgUtil.isIOS()) {
-  iNoBounce.enable();
-}
-var bgGame = new BgGame("normal");
+  const bgGame = new BgGame("normal");
 </script>
 <script src="/js/start-serviceWorker.js"></script>
 </body>
