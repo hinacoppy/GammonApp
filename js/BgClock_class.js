@@ -82,7 +82,7 @@ class BgClock {
     if (time < 0) { time = 0; }
     const min = Math.trunc(time / 60);
     const sec = Math.trunc(time % 60);
-    const timestr = ("00" + min).substr(-2) + ":" + ("00" + sec).substr(-2);
+    const timestr = ("00" + min).slice(-2) + ":" + ("00" + sec).slice(-2);
     $("#clock" + player).text(timestr);
   }
 
