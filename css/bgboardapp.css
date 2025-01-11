@@ -1,6 +1,6 @@
 /**
   bgboardapp.css
-  designed by hinacoppy 2019--2021
+  designed by hinacoppy 2019--2025
 */
 
 /* document outline ----------------------------------------- */
@@ -8,20 +8,30 @@
   user-select:none; /* タップ、ドラッグで文字選択しないように */
 }
 html{
+  height:100vmin;
   overflow:hidden;
-  overscroll-behavior:none; /* バウンススクロールを抑止(only for Android) */
+  overscroll-behavior:none; /* バウンススクロールを抑止 */
 }
 body{
   margin:0;
   padding:0;
-  max-height:100vh;
-  min-height:100vh;
-  height:100vh;
+  max-height:100vmin;
+  min-height:100vmin;
+  height:100vmin;
   font-family:'Arial', 'Meiryo UI';
 }
 select{
   font-size:100%;
 }
+
+@media screen and (orientation:portrait) {
+.container{ /* 縦画面の時は横向きに表示し、横画面にするよう促す */
+  width:100vh;
+  height:100vw;
+  margin:-100vw 0 100vh;
+  transform:rotate(90deg);
+  transform-origin:left bottom;
+}}
 
 /* App definition ----------------------------------------------- */
 .turn1{
@@ -32,51 +42,51 @@ select{
 }
 #nav{
   position:absolute;
-  top:35vh;
-  left:86vw;
+  top:35vmin;
+  left:86vmax;
 }
 .nav{
-  width:30vh;
-  height:30vh;
+  width:30vmin;
+  height:30vmin;
   transform:rotateZ(-90deg);
   text-align:center;
 }
 #player1{
   position:absolute;
-  top:70vh;
-  left:86vw;
+  top:70vmin;
+  left:86vmax;
 }
 #player2{
   position:absolute;
-  top:0vh;
-  left:86vw;
+  top:0vmin;
+  left:86vmax;
 }
 .playerinfo__nouse{
   transform:rotateZ(-90deg);
-  width:30vh;
-  height:30vh;
+  width:30vmin;
+  height:30vmin;
   text-align:center;
 }
 .score{
   display:block;
   background-color:#877;
   color:white;
-  width:24vh;
-  height:6vw;
-  line-height:6vw;
+  width:24vmin;
+  height:6vmax;
+  line-height:6vmax;
   text-align:center;
-  font-size:5vw;
+  font-size:5vmax;
   margin:0 auto;
 }
 .pip{
   display:block;
   background-color:#4aa;
   color:white;
-  width:18vh;
-  height:4vw;
-  line-height:4vw;
+  width:18vmin;
+  height:4vmax;
+  line-height:4vmax;
   text-align:center;
-  font-size:3vw;
+  font-size:3vmax;
   margin:0 auto;
 }
 .panel{
@@ -88,11 +98,11 @@ select{
   display:none;
   background-color:#a4a;
   color:white;
-  width:18vh;
-  height:4vw;
-  line-height:4vw;
+  width:18vmin;
+  height:4vmax;
+  line-height:4vmax;
   text-align:center;
-  font-size:3vw;
+  font-size:3vmax;
   margin:0 auto;
 }
 
@@ -100,13 +110,13 @@ select{
   display:none;
   background-color: rgba( 160, 160, 64, 0.85 );
   color:white;
-  width:9vh;
-  height:3vw;
-  line-height:3vw;
+  width:9vmin;
+  height:3vmax;
+  line-height:3vmax;
   text-align:center;
-  font-size:2vw;
+  font-size:2vmax;
   margin:0 auto;
-  transform:translateY(-3.5vw)
+  transform:translateY(-3.5vmax)
 }
 .timeupLose{
   background-color:yellow;
@@ -115,8 +125,8 @@ select{
 #pausepanel{
   background-color: rgba( 128, 128, 128, 0.60 );
   color:cyan;
-  width:65vw;
-  height:80vh;
+  width:65vmax;
+  height:80vmin;
   text-align:center;
 }
 
@@ -127,9 +137,9 @@ select{
   color:var(--fg-color);
   border:3px solid var(--fg-color);
   background-color:var(--bg-color);
-  border-radius:20px;
-  padding:2vh 2vw;
-  font-size:2vw;
+  border-radius:5vmin;
+  padding:2vmin 2vmax;
+  font-size:2vmax;
   white-space:nowrap;
 }
 .oparationbtn:disabled {
@@ -147,15 +157,15 @@ select{
   z-index:99;
   background-color:#dff;
   border:3px solid #00f;
-  padding:2vh 4vw;
-  font-size:1.8vw;
+  padding:2vmin 4vmax;
+  font-size:1.8vmax;
 }
 .popuptitle{
-  font-size:2.2vw;
+  font-size:2.2vmax;
   color:#fff;
   background-color:#46f;
-  padding:2vh 2vw;
-  margin-bottom:2vh;
+  padding:2vmin 2vmax;
+  margin-bottom:2vmin;
 }
 
 /* toggle switch ----------------------------------------- */
@@ -164,11 +174,12 @@ input {
 }
 .togglelabel {
   display:inline-block;
-  width:300px;
+  width:22vmax;
+  height:4vmin;
   position:relative;
-  padding:15px 30px 15px 62px;
+  padding:1vmin 0vmax 1vmin 4vmax;
   border:3px solid #fff;
-  border-radius:100px;
+  border-radius:3vmax;
   color:#fff;
   background-color:#999;
   white-space:nowrap;
@@ -178,12 +189,12 @@ input {
   content:'';
   display:block;
   position:absolute;
-  top:10px;
-  bottom:10px;
-  left:10px;
-  width:32px;
-  border:3px solid #fff;
-  border-radius:100px;
+  top:1vmin;
+  left:1vmin;
+  width:3vmin;
+  height:3vmin;
+  border:2px solid #fff;
+  border-radius:5vmin;
   transition:background-color .2s;
 }
 .switch:checked + label {
