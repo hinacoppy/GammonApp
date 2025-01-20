@@ -16,7 +16,7 @@ const contentToCache = [
   ORIGIN + '/GammonApp/osampo/icon/android-chrome-512x512.png',
   ORIGIN + '/GammonApp/osampo/css/OsampoGammon.css',
   ORIGIN + '/GammonApp/osampo/js/BgBoard_class.js',
-  ORIGIN + '/GammonApp/osampo/js/BgGame_class.js'
+  ORIGIN + '/GammonApp/osampo/js/BgGame_class.js',
   ORIGIN + '/js/BgChequer_class.js',
   ORIGIN + '/js/BgXgid_class.js',
   ORIGIN + '/js/BgUtil_class.js',
