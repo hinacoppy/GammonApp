@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 <meta name="description" content="Osampo Gammon App">
@@ -179,17 +179,13 @@
 
 <script src="/js/fontawesome-inuse.min.js" defer></script>
 <script src="/js/jquery-3.7.1.min.js"></script>
-<script src="/js/inobounce.min.js"></script>
 <script src="/js/BgChequer_class.js"></script>
 <script src="/js/BgXgid_class.js"></script>
 <script src="/js/BgUtil_class.js"></script>
 <script src="js/BgBoard_class.js"></script>
 <script src="js/BgGame_class.js"></script>
 <script>
-if (BgUtil.isIOS()) {
-  iNoBounce.enable();
-}
-var osampoGammon = new BgGame("half");
+  const osampoGammon = new BgGame("half");
 </script>
 <script src="/js/start-serviceWorker.js"></script>
 </body>
